@@ -5,6 +5,7 @@ import BistroCard from '../BistroCard/BistroCard';
 import PopularMenu from '../PopularMenu/PopularMenu';
 import Contact from '../Contact/Contact';
 import Featured from '../Featured/Featured';
+import Testimonial from '../Testimonials/Testimonial';
 
 const Home = () => {
     return (
@@ -15,6 +16,7 @@ const Home = () => {
                 <PopularMenu></PopularMenu>
                 <Contact></Contact>
                 <Featured></Featured>
+                <Testimonial></Testimonial>
         </div>
     );
 };

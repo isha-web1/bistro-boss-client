@@ -4,7 +4,7 @@ import chef from '../../../assets/home/chef-service.jpg'
 const BistroCard = () => {
   return (
     <div
-      className="hero h-[572px] mb-8"
+      className="hero bg-fixed h-[572px] mb-8"
       style={{
         backgroundImage: `url("${chef}")`,
       }}
