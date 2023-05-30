@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import photo from '../../assets/others/authentication2.png'
 import bgPhoto from '../../assets/others/authentication.png'
-import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
+import { loadCaptchaEnginge, LoadCanvasTemplate,  validateCaptcha } from 'react-simple-captcha';
 
 const Login = () => {
     const captchaRef = useRef(null)
