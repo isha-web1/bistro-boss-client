@@ -6,6 +6,7 @@ const NavBar = () => {
          <Link  to ='/'>Home</Link>
          <Link to ='/menu'> Menu</Link>
          <Link to ='/order/salad'> Order Food</Link>
+         <Link to ='/login'>Login</Link>
     </>
   return (
     <div className="navbar fixed z-10 bg-opacity-30 max-w-screen-xl bg-black text-white">
