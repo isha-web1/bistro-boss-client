@@ -1,26 +1,51 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../../Providers/AuthProviders";
+import { FaShoppingCart} from 'react-icons/fa';
 
 const NavBar = () => {
-  const {user, logOut} = useContext(AuthContext)
-  const handleLogOut = () =>{
-     logOut()
-     .then(() =>{})
-     .catch(error =>{console.log(error)})
-  }
-    const navItems = < >
-         <Link  to ='/'>Home</Link>
-         <Link to ='/menu'> Menu</Link>
-         <Link to ='/order/salad'> Order Food</Link>
-         
-         {
-          user ? <> <button onClick={handleLogOut} className="btn btn-ghost">logout</button>
-          </> : <> 
-          <Link to ='/login'>Login</Link>
-          </>
-         }
+  const { user, logOut } = useContext(AuthContext);
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {})
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const navItems = (
+    <>
+      <Link to="/">Home</Link>
+      <Link to="/menu"> Menu</Link>
+      <Link to="/order/salad"> Order Food</Link>
+      <Link to="/secret">secret</Link>
+      <li>
+        <Link to="/">
+          <button className="btn gap-2">
+            <FaShoppingCart></FaShoppingCart>
+            <div className="badge badge-secondary">+0</div>
+          </button>
+        </Link>
+      </li>
+
+      {user ? (
+        <>
+          &&
+          <div className="avatar">
+            <div className="w-12 rounded-full">
+              <img src={user.photoURL} />
+            </div>
+          </div>
+          <button onClick={handleLogOut} className="btn btn-ghost">
+            logout
+          </button>
+        </>
+      ) : (
+        <>
+          <Link to="/login">Login</Link>
+        </>
+      )}
     </>
+  );
   return (
     <div className="navbar fixed z-10 bg-opacity-30 max-w-screen-xl bg-black text-white">
       <div className="navbar-start">
@@ -45,15 +70,13 @@ const NavBar = () => {
             tabIndex={0}
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 "
           >
-           {navItems}
+            {navItems}
           </ul>
         </div>
         <a className="btn btn-ghost normal-case text-xl">Bistro Boss</a>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 space-x-5">
-          {navItems}
-        </ul>
+        <ul className="menu menu-horizontal px-1 space-x-5">{navItems}</ul>
       </div>
       <div className="navbar-end">
         <a className="btn">Get started</a>

@@ -3,21 +3,44 @@ import photo from '../../assets/others/authentication1.png'
 import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet-async";
 import { AuthContext } from "../../Providers/AuthProviders";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { updateProfile } from "firebase/auth";
+import Swal from "sweetalert2";
 
 
 const SignUp = () => {
-    const { register, handleSubmit,  formState : {errors}  } = useForm();
-  const {createUser} = useContext(AuthContext)
+    const { register, handleSubmit, reset, formState : {errors}  } = useForm();
+  const {createUser, user} = useContext(AuthContext)
+  const navigate = useNavigate()
     const onSubmit = data => {
         console.log(data)
         createUser(data.email, data.password)
         .then(result =>{
             const loggedUser = result.user;
             console.log(loggedUser)
+            updateUserData(result.user.photoURL)
+            reset()
         })
         .catch(error => console.log(error))
     };
+
+    const updateUserData = (user, photoURL) =>{
+      updateProfile(user,{
+        photoURL : photoURL
+      })
+      .then(()=>{
+        console.log('display photo upload')
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'user created successfully',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        navigate('/')
+      })
+      .catch(error => console.log(error))
+    }
 
     
   return (
@@ -61,6 +84,20 @@ const SignUp = () => {
                 
               />
               {errors.email && <span className="text-red-600">email field is isRequired</span>}
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">photo URL</span>
+              </label>
+              <input
+                type="text"
+                name="photoURL"
+                {...register("photoURL",{ required: true })}
+                placeholder="photoURL"
+                className="input input-bordered"
+                
+              />
+              {errors.photoURL && <span className="text-red-600">photoURL is isRequired</span>}
             </div>
             <div className="form-control">
               <label className="label">

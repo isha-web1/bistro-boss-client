@@ -3,7 +3,7 @@ import photo from '../../assets/others/authentication2.png'
 import bgPhoto from '../../assets/others/authentication.png'
 import { loadCaptchaEnginge, LoadCanvasTemplate,  validateCaptcha } from 'react-simple-captcha';
 import { AuthContext } from "../../Providers/AuthProviders";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Swal from 'sweetalert2'
 
@@ -11,7 +11,10 @@ const Login = () => {
     
     const [disable, setDisable] = useState(true)
     const {signIn} = useContext(AuthContext)
+    const navigate = useNavigate()
+    const location = useLocation()
 
+    const from = location.state?.from?.pathname || '/'; 
 
     const handleLogin = event => {
         event.preventDefault()
@@ -32,6 +35,7 @@ const Login = () => {
                   popup: 'animate__animated animate__fadeOutUp'
                 }
               })
+              navigate(from , {replace: true})
         })
     }
 
