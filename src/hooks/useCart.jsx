@@ -4,11 +4,12 @@ import { AuthContext } from '../Providers/AuthProviders';
 
 const useCart = () => {
 const {user} = useContext(AuthContext)
-
+console.log(user?.email)
 const { refetch,  data :cart =[] } = useQuery({
     queryKey: ['carts' , user?.email],
+    // enabled:!!user?.email && !!localStorage.getItem("cart"),
     queryFn: async () =>{
-        const response = await fetch(`http://localhost:5000/carts=${user?.email}`)
+        const response = await fetch(`http://localhost:5000/carts?email=${user?.email}`)
         return response.json();
     },
   })
