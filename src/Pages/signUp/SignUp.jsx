@@ -10,37 +10,63 @@ import Swal from "sweetalert2";
 
 const SignUp = () => {
     const { register, handleSubmit, reset, formState : {errors}  } = useForm();
-  const {createUser, user} = useContext(AuthContext)
+  const {createUser, user, updateUserProfile} = useContext(AuthContext)
   const navigate = useNavigate()
     const onSubmit = data => {
         console.log(data)
         createUser(data.email, data.password)
         .then(result =>{
             const loggedUser = result.user;
+            if(loggedUser){
+              handleUpdateProfile({displayName : data.name , photoURL : data.photoURL, email : data.email })
+            }
             console.log(loggedUser)
-            updateUserData(result.user.photoURL)
+            
             reset()
         })
         .catch(error => console.log(error))
     };
 
-    const updateUserData = (user, photoURL) =>{
+    const updateUserData = (profile) =>{
       updateProfile(user,{
-        photoURL : photoURL
+        photoURL : photoURL,
+        name : name,
+        email : email
       })
-      .then(()=>{
-        console.log('display photo upload')
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'user created successfully',
-          showConfirmButton: false,
-          timer: 1500
-        })
-        navigate('/')
-      })
-      .catch(error => console.log(error))
+      
     }
+
+    const handleUpdateProfile = (profile) => {
+      updateUserProfile(profile)
+      .then(()=>{
+        // const saveUser = {displayName : data.name , photoURL : data.photoURL}
+        fetch('http://localhost:5000/users',{
+          method :'POST',
+          headers : {
+            'content-type' : 'application/json'
+          },
+          body : JSON.stringify(profile)
+        })
+        .then(res => res.json())
+        .then(data =>{
+          if(data.insertedId){
+            reset()
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'user created successfully',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            navigate('/')
+          }
+        })
+        
+
+        
+      })
+      .catch(error => console.log(error))   
+  }
 
     
   return (
