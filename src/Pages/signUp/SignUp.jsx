@@ -6,6 +6,7 @@ import { AuthContext } from "../../Providers/AuthProviders";
 import { Link, useNavigate } from "react-router-dom";
 import { updateProfile } from "firebase/auth";
 import Swal from "sweetalert2";
+import SocialLogin from "../Shared/socialLogin/SocialLogin";
 
 
 const SignUp = () => {
@@ -153,6 +154,7 @@ const SignUp = () => {
             </div>
           </form>
           <p>all ready have an account? <Link to='/login'>please login</Link> </p>
+          <SocialLogin></SocialLogin>
         </div>
       </div>
     </div>
